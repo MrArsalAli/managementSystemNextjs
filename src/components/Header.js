@@ -9,37 +9,42 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { auth } from "../../auth";
+import Image from "next/image";
 
-export default function Header() {
-  const session = null;
+export default async function Header() {
+  const session = await auth()
   return (
     <div className="flex justify-between container mx-auto p-2 border">
       <div className="text-3xl font-mono">LOGO</div>
       <div>
-        {session ?
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>MS</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <Link href={"/profile"}>
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            </Link>
-            <Link href={"/appointments"}>
-            <DropdownMenuItem>My Appointments</DropdownMenuItem>
-            </Link>
-            <DropdownMenuItem>Logout</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu> :
-        <Link href={"/signin"}>
-          <Button variant={"outline"}>Login</Button>
-        </Link>
-        }
+        {session ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Image
+              height={40}
+              width={40}
+              className="rounded-full"
+              src={session?.user?.image}
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <Link href={"/profile"}>
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+              </Link>
+              <Link href={"/appointments"}>
+                <DropdownMenuItem>My Appointments</DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <Link href={"/signin"}>
+            <Button variant={"outline"}>Login</Button>
+          </Link>
+        )}
       </div>
     </div>
   );
