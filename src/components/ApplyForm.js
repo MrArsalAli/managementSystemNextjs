@@ -16,7 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import UploadImage from "./UploadImage";
+// import UploadImage from "./UploadImage";
 import { SelectItem } from "@radix-ui/react-select";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 
@@ -263,7 +263,7 @@ export default function DoctorForm() {
         />
 
         {/* Profile Image */}
-        <UploadImage />
+        {/* <UploadImage /> */}
 
         <div className="my-4">
           <Button type="submit">Submit</Button>
