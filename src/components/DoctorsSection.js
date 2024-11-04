@@ -37,7 +37,7 @@ export default function DoctorsSection({ isHome }) {
               </SelectTrigger>
               <SelectContent>
                 {Categories.map((category) => (
-                  <SelectItem value={category}>{category}</SelectItem>
+                  <SelectItem key={category} value={category}>{category}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -45,6 +45,8 @@ export default function DoctorsSection({ isHome }) {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
           {filtered.map((doctor) => (
+            console.log(doctor.id),
+            
             <Card key={doctor.id}>
               <CardHeader className="flex flex-row">
                 <Avatar>

@@ -33,6 +33,7 @@ export default function Hero() {
             <Image
               width={500}
               height={1200}
+              alt="MS"
               src={
                 "https://images.pexels.com/photos/7048014/pexels-photo-7048014.jpeg?auto=compress&cs=tinysrgb&w=600"
               }
