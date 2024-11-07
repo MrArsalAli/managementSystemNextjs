@@ -16,7 +16,13 @@ export default async function Header() {
   const session = await auth()
   return (
     <div className="flex justify-between container mx-auto p-2 border">
-      <div className="text-3xl font-mono">LOGO</div>
+      <div className="flex items-center ">
+        <Image
+        height={50}
+        width={50}
+        src={"https://images.pexels.com/photos/7048014/pexels-photo-7048014.jpeg?auto=compress&cs=tinysrgb&w=600"}
+        />
+      </div>
       <div>
         {session ? (
           <DropdownMenu>
