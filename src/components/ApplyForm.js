@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { SelectItem } from "@radix-ui/react-select";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { addRequest } from "@/actions/requests";
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast";
 
 // Define Zod schema
 const formSchema = z.object({
@@ -43,8 +43,8 @@ const formSchema = z.object({
   address: z.string(),
 });
 
-export default function DoctorForm({session}) {
-  const { toast } = useToast()
+export default function DoctorForm({ session }) {
+  const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -70,32 +70,29 @@ export default function DoctorForm({session}) {
   // }, []);
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  async function onSubmit(values){
-    console.log(values)
+  async function onSubmit(values) {
+    console.log(values);
     values.user = session.user._id;
-    const response = await addRequest(values)
-    if(response.error) {
+    const response = await addRequest(values);
+    if (response.error) {
       form.reset(),
-      toast({
-        title: "You had Submitted before! Wait",
-        description: response.msg,
-      })
-    } else{
+        toast({
+          title: "You had Submitted before! Wait",
+          description: response.msg,
+        });
+    } else {
       form.reset(),
         toast({
           title: "Your Request is Submitted",
           description: "You will be informed in 3 working days",
-        })
+        });
     }
-
-
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid grid-cols-2 gap-6">
-          
           {/* Hospital */}
           <FormField
             control={form.control}
@@ -170,7 +167,6 @@ export default function DoctorForm({session}) {
               </FormItem>
             )}
           />
-
 
           {/* Fees */}
           <FormField
@@ -252,7 +248,9 @@ export default function DoctorForm({session}) {
         {/* <UploadImage /> */}
 
         <div className="my-4">
-          <Button type="submit">{form.formState.isSubmitting ? "Loading" : "Submit"}</Button>
+          <Button type="submit">
+            {form.formState.isSubmitting ? "Loading" : "Submit"}
+          </Button>
         </div>
       </form>
     </Form>

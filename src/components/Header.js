@@ -17,12 +17,7 @@ export default async function Header() {
   return (
     <div className="flex justify-between container mx-auto p-2 border">
       <div className="flex items-center ">
-        <Image
-          height={50}
-          width={50}
-          alt="MS"
-          src="https://images.pexels.com/photos/7048014/pexels-photo-7048014.jpeg?auto=compress&cs=tinysrgb&w=600"
-        />
+        <h1 className="font-bold text-xl">HMS</h1>
       </div>
       <div>
         {session ? (
