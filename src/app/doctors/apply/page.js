@@ -1,6 +1,8 @@
 import DoctorForm from "@/components/ApplyForm";
+import { auth } from "../../../../auth";
 
-export default function AppyAsADoctor() {
+export default async function AppyAsADoctor() {
+  const session = await auth()
   return (
     <div className="min-h-screen container mx-auto">
       <h1 className="font-bold text-2xl my-4">Apply As A Doctor</h1>
@@ -15,7 +17,7 @@ export default function AppyAsADoctor() {
         looking for.
       </p>
 
-      <DoctorForm />
+      <DoctorForm session={session} />
     </div>
   );
 }

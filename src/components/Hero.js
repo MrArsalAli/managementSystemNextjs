@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { auth } from "../../auth";
 
-export default function Hero() {
+export default async function Hero() {
+  const session = await auth();
   return (
     <>
       <section className="text-gray-600 body-font">
@@ -24,8 +26,8 @@ export default function Hero() {
             </p>
             <div className="flex gap-2 justify-center">
               <Button variant="outline">Find A Specialist</Button>
-              <Link href={"/doctors/apply"}>
-               <Button>Apply As A Doctor</Button>
+              <Link href={session ? "/doctors/apply" : "/signin"}>
+                <Button>Apply As A Doctor</Button>
               </Link>
             </div>
           </div>

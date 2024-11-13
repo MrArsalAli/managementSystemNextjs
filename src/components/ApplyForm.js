@@ -19,77 +19,83 @@ import { Input } from "@/components/ui/input";
 // import UploadImage from "./UploadImage";
 import { SelectItem } from "@radix-ui/react-select";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
+import { addRequest } from "@/actions/requests";
+import { useToast } from "@/hooks/use-toast"
 
 // Define Zod schema
 const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters").max(50),
+  // name: z.string().min(2, "Name must be at least 2 characters").max(50),
   bio: z.string().min(2, "Bio must be at least 2 characters").max(120),
   hospital: z
     .string()
     .min(2, "Hospital name must be at least 2 characters")
     .max(50),
-  days: z.array(z.string()).nonempty("At least one day is required"),
-  fees: z.string().nonempty("Fees are required"),
-  gender: z.enum(["Male", "Female", "Other"]),
-  appointmentTime: z.string().nonempty("Appointment time is required"),
-  degree: z.string().nonempty("Degree is required"),
-  specialization: z.string().nonempty("Specialization is required"),
-  experience: z.string().nonempty("Experience is required"),
-  profileImg: z.string().url("Invalid image URL"),
-  number: z.string().min(10, "Invalid phone number").max(15),
-  email: z.string().email("Invalid email address"),
-  address: z.string().nonempty("Address is required"),
+  // days: z.array(z.string()).nonempty("At least one day is required"),
+  fees: z.string(),
+  gender: z.string(),
+  appointmentTime: z.string(),
+  degree: z.string(),
+  specialization: z.string(),
+  experience: z.string(),
+  // profileImg: z.string().url("Invalid image URL"),
+  number: z.string().min(3, "Invalid phone number").max(15),
+  // email: z.string().email("Invalid email address"),
+  address: z.string(),
 });
 
-export default function DoctorForm() {
+export default function DoctorForm({session}) {
+  const { toast } = useToast()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      // name: "",
       bio: "",
       hospital: "",
-      days: [],
+      // days: [],
       fees: "",
-      gender: "Other",
+      gender: "",
       appointmentTime: "",
       degree: "",
       specialization: "",
       experience: "",
-      profileImg: "",
+      // profileImg: "",
       number: "",
-      email: "",
+      // email: "",
       address: "",
     },
   });
 
-  const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the files
-  }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  // const onDrop = useCallback((acceptedFiles) => {
+  //   // Do something with the files
+  // }, []);
+  // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  const onSubmit = (values) => {
-    console.log(values);
-  };
+  async function onSubmit(values){
+    console.log(values)
+    values.user = session.user._id;
+    const response = await addRequest(values)
+    if(response.error) {
+      form.reset(),
+      toast({
+        title: "You had Submitted before! Wait",
+        description: response.msg,
+      })
+    } else{
+      form.reset(),
+        toast({
+          title: "Your Request is Submitted",
+          description: "You will be informed in 3 working days",
+        })
+    }
+
+
+  }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid grid-cols-2 gap-6">
-          {/* Name */}
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter your name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
+          
           {/* Hospital */}
           <FormField
             control={form.control}
@@ -99,6 +105,21 @@ export default function DoctorForm() {
                 <FormLabel>Hospital</FormLabel>
                 <FormControl>
                   <Input placeholder="Hospital name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Appointment Time  */}
+          <FormField
+            name="appointmentTime"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Appointment Time</FormLabel>
+                <FormControl>
+                  <Input type="time" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -150,51 +171,16 @@ export default function DoctorForm() {
             )}
           />
 
-          {/* Days */}
+
+          {/* Fees */}
           <FormField
-            name="days"
             control={form.control}
+            name="fees"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Available Days</FormLabel>
-
+                <FormLabel>Fees</FormLabel>
                 <FormControl>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Your Days" />
-                    </SelectTrigger>
-                    <SelectContent
-                      multiple
-                      placeholder="Select days"
-                      onChange={(selectedOptions) =>
-                        field.onChange(
-                          selectedOptions.map((option) => option.value)
-                        )
-                      }
-                    >
-                      <SelectItem className="cursor-pointer" value="Mon">
-                        Mon
-                      </SelectItem>
-                      <SelectItem className="cursor-pointer" value="Tue">
-                        Tue
-                      </SelectItem>
-                      <SelectItem className="cursor-pointer" value="Wed">
-                        Wed
-                      </SelectItem>
-                      <SelectItem className="cursor-pointer" value="Thu">
-                        Thu
-                      </SelectItem>
-                      <SelectItem className="cursor-pointer" value="Fri">
-                        Fri
-                      </SelectItem>
-                      <SelectItem className="cursor-pointer" value="Sat">
-                        Sat
-                      </SelectItem>
-                      <SelectItem className="cursor-pointer" value="Sun">
-                        Sun
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Input type="number" placeholder="Fees" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -216,15 +202,15 @@ export default function DoctorForm() {
             )}
           />
 
-          {/* Email */}
+          {/* Gender */}
           <FormField
             control={form.control}
-            name="email"
+            name="gender"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Gender</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="Email" {...field} />
+                  <Input placeholder="Gender" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -266,7 +252,7 @@ export default function DoctorForm() {
         {/* <UploadImage /> */}
 
         <div className="my-4">
-          <Button type="submit">Submit</Button>
+          <Button type="submit">{form.formState.isSubmitting ? "Loading" : "Submit"}</Button>
         </div>
       </form>
     </Form>
