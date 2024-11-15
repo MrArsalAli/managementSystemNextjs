@@ -71,7 +71,6 @@ export default function DoctorForm({ session }) {
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   async function onSubmit(values) {
-    console.log(values);
     values.user = session.user._id;
     const response = await addRequest(values);
     if (response.error) {

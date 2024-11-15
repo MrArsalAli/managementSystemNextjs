@@ -9,10 +9,9 @@ export async function addRequest(data) {
   return add;
 }
 
-
 export async function getRequest() {
-    let requests = await fetch(`${process.env.BASE_URL}api/requests`);
-    requests = requests.json();
-  
-    return requests;
-  }
+  let requests = await fetch(`${process.env.BASE_URL}api/requests`);
+  requests = requests.json();
+
+  return requests;
+}

@@ -16,7 +16,18 @@ async function handleLogin(obj) {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [Google],
+  
+providers: [
+  Providers.Google({
+    clientId: process.env.AUTH_GOOGLE_ID,
+    clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    authorization: {
+      params: {
+        redirect_uri: process.env.BASE_URL + "/api/auth/callback/google",
+      },
+    },
+  }),
+],
   callbacks: {
     async signIn({ account, profile }) {
       if (account.provider === "google") {
@@ -27,18 +38,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           picture: profile.picture,
         };
         const user = await handleLogin(obj);
-        return user;
+        return {user};
       }
     },
     async jwt({ token }) {
       const user = await handleLogin({ email: token.email });
-      console.log(user);
-      (token.role = user.role), (token._id = user._id);
+      token.role = user.role;
+      token._id = user._id;
       return token;
     },
     session({ session, token }) {
-      console.log(session);
-      (session.user._id = token._id), (session.user.role = token.role);
+      session.user._id = token._id;
+      session.user.role = token.role;
+      // console.log("session==> ",session)
       return session;
     },
   },

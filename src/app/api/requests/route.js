@@ -7,16 +7,16 @@ export async function POST(req) {
     const obj = await req.json();
 
     const isUserRequestedBefore = await RequestModal.findOne({
-      user : obj.user,
-    })
-    if(isUserRequestedBefore){
+      user: obj.user,
+    });
+    if (isUserRequestedBefore) {
       return Response.json(
         {
           error: true,
           msg: "You had already requested as a doctor",
         },
         { status: 403 }
-      ); 
+      );
     }
 
     let newRequest = await new RequestModal({ ...obj });
@@ -43,8 +43,8 @@ export async function POST(req) {
 
 export async function GET(req) {
   await connectDB();
+  const requests = await RequestModal.find().populate("user");
 
-  const requests = await RequestModal.find();
   return Response.json(
     {
       error: false,
