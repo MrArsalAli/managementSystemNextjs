@@ -2,7 +2,6 @@ import connectDB from "@/lib/connectDB";
 import { UserModal } from "@/lib/modals/UserModal";
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import GoogleProvider from "next-auth/providers/google";
 
 async function handleLogin(obj) {
   await connectDB();
@@ -17,17 +16,7 @@ async function handleLogin(obj) {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
-    GoogleProvider({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
-      authorization: {
-        params: {
-          redirect_uri: process.env.BASE_URL + "/api/auth/callback/google",
-        },
-      },
-    }),
-  ],
+  providers: [Google],
   callbacks: {
     async signIn({ account, profile }) {
       if (account.provider === "google") {
