@@ -2,6 +2,7 @@ import connectDB from "@/lib/connectDB";
 import { UserModal } from "@/lib/modals/UserModal";
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import GoogleProvider from "next-auth/providers/google";
 
 async function handleLogin(obj) {
   await connectDB();
