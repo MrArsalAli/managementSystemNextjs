@@ -16,18 +16,17 @@ async function handleLogin(obj) {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  
-providers: [
-  Providers.Google({
-    clientId: process.env.AUTH_GOOGLE_ID,
-    clientSecret: process.env.AUTH_GOOGLE_SECRET,
-    authorization: {
-      params: {
-        redirect_uri: process.env.BASE_URL + "/api/auth/callback/google",
+  providers: [
+    GoogleProvider({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      authorization: {
+        params: {
+          redirect_uri: process.env.BASE_URL + "/api/auth/callback/google",
+        },
       },
-    },
-  }),
-],
+    }),
+  ],
   callbacks: {
     async signIn({ account, profile }) {
       if (account.provider === "google") {
@@ -38,7 +37,7 @@ providers: [
           picture: profile.picture,
         };
         const user = await handleLogin(obj);
-        return {user};
+        return { user };
       }
     },
     async jwt({ token }) {
