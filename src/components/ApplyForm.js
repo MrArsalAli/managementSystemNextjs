@@ -5,8 +5,8 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import React, { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
-import Dropzone from "react-dropzone";
+// import { useDropzone } from "react-dropzone";
+// import Dropzone from "react-dropzone";
 import {
   Form,
   FormControl,
@@ -16,31 +16,31 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-// import UploadImage from "./UploadImage";
-import { SelectItem } from "@radix-ui/react-select";
-import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
+// import { SelectItem } from "@radix-ui/react-select";
+// import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { addRequest } from "@/actions/requests";
 import { useToast } from "@/hooks/use-toast";
+// import UploadImage from "./UploadImage";
 
 // Define Zod schema
 const formSchema = z.object({
-  // name: z.string().min(2, "Name must be at least 2 characters").max(50),
   bio: z.string().min(2, "Bio must be at least 2 characters").max(120),
   hospital: z
-    .string()
-    .min(2, "Hospital name must be at least 2 characters")
-    .max(50),
-  // days: z.array(z.string()).nonempty("At least one day is required"),
+  .string()
+  .min(2, "Hospital name must be at least 2 characters")
+  .max(50),
   fees: z.string(),
   gender: z.string(),
   appointmentTime: z.string(),
   degree: z.string(),
   specialization: z.string(),
   experience: z.string(),
-  // profileImg: z.string().url("Invalid image URL"),
   number: z.string().min(3, "Invalid phone number").max(15),
-  // email: z.string().email("Invalid email address"),
   address: z.string(),
+  // days: z.array(z.string()).nonempty("At least one day is required"),
+  // profileImg: z.string().url("Invalid image URL"),
+  // name: z.string().min(2, "Name must be at least 2 characters").max(50),
+  // email: z.string().email("Invalid email address"),
 });
 
 export default function DoctorForm({ session }) {
@@ -48,20 +48,20 @@ export default function DoctorForm({ session }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      // name: "",
       bio: "",
       hospital: "",
-      // days: [],
       fees: "",
       gender: "",
       appointmentTime: "",
       degree: "",
       specialization: "",
       experience: "",
-      // profileImg: "",
       number: "",
-      // email: "",
       address: "",
+      // profileImg: "",
+      // days: [],
+      // name: "",
+      // email: "",
     },
   });
 

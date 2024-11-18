@@ -37,59 +37,64 @@ export default function DoctorsSection({ isHome }) {
               </SelectTrigger>
               <SelectContent>
                 {Categories.map((category) => (
-                  <SelectItem key={category} value={category}>{category}</SelectItem>
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
-          {filtered.map((doctor) => (
-            console.log(doctor.id),
-            
-            <Card key={doctor.id}>
-              <CardHeader className="flex flex-row">
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>MS</AvatarFallback>
-                </Avatar>
-                <div className="pl-2">
-                  <CardTitle>{doctor.name}</CardTitle>
-                  <CardDescription>{doctor.category}</CardDescription>
-                </div>
-              </CardHeader>
-              {!isHome && (
-                <CardContent>
-                  <div className="flex justify-between">
-                    <div className="flex items-center gap-2">
-                      <HomeIcon />
-                      <p className="font-bold">Hospital :</p>
+          {filtered.map(
+            (doctor) => (
+              console.log(doctor.id),
+              (
+                <Card key={doctor.id}>
+                  <CardHeader className="flex flex-row">
+                    <Avatar>
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarFallback>MS</AvatarFallback>
+                    </Avatar>
+                    <div className="pl-2">
+                      <CardTitle>{doctor.name}</CardTitle>
+                      <CardDescription>{doctor.category}</CardDescription>
                     </div>
-                    <p>{doctor.hospital}</p>
-                  </div>
-                  <div className="flex justify-between">
-                    <div className="flex items-center gap-2">
-                      <IdCardIcon />
-                      <p className="font-bold">Gender :</p>
-                    </div>
-                    <p>{doctor.gender}</p>
-                  </div>
-                  <div className="flex justify-between">
-                    <div className="flex items-center gap-2">
-                      <ClockIcon />
-                      <p className="font-bold">Appointment Time :</p>
-                    </div>
-                    <p>{doctor.appointmentTime}</p>
-                  </div>
-                </CardContent>
-              )}
-              <CardFooter>
-                <Link href={`/doctors/${doctor.id}`}>
-                <Button>See Details</Button>
-                </Link>
-              </CardFooter>
-            </Card>
-          ))}
+                  </CardHeader>
+                  {!isHome && (
+                    <CardContent>
+                      <div className="flex justify-between">
+                        <div className="flex items-center gap-2">
+                          <HomeIcon />
+                          <p className="font-bold">Hospital :</p>
+                        </div>
+                        <p>{doctor.hospital}</p>
+                      </div>
+                      <div className="flex justify-between">
+                        <div className="flex items-center gap-2">
+                          <IdCardIcon />
+                          <p className="font-bold">Gender :</p>
+                        </div>
+                        <p>{doctor.gender}</p>
+                      </div>
+                      <div className="flex justify-between">
+                        <div className="flex items-center gap-2">
+                          <ClockIcon />
+                          <p className="font-bold">Appointment Time :</p>
+                        </div>
+                        <p>{doctor.appointmentTime}</p>
+                      </div>
+                    </CardContent>
+                  )}
+                  <CardFooter>
+                    <Link href={`/doctors/${doctor.id}`}>
+                      <Button>See Details</Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
+              )
+            )
+          )}
         </div>
       </div>
     </>

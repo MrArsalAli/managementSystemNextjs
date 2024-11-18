@@ -5,10 +5,10 @@ import Hero from "@/components/Hero";
 export default function Home() {
   return (
     <>
-    <div className="min-h-screen">
-      <Hero />
-      <DoctorsSection isHome={true} />
-    </div>
+      <div className="min-h-screen">
+        <Hero />
+        <DoctorsSection isHome={true} />
+      </div>
     </>
   );
 }
