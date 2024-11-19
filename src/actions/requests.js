@@ -11,8 +11,8 @@ export async function addRequest(data) {
   return add;
 }
 
-export async function getRequest() {
-  let requests = await fetch(`${process.env.BASE_URL}api/requests`);
+export async function getRequest(status) {
+  let requests = await fetch(`${process.env.BASE_URL}api/requests?status=${status ? status : ""}`);
   requests = requests.json();
   return requests;
 }

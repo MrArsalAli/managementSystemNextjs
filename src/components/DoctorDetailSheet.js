@@ -1,4 +1,3 @@
-
 import {
   Sheet,
   SheetContent,
@@ -17,6 +16,7 @@ import {
   GraduationCap,
   Stethoscope,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function DoctorDetailSheet({ doctor }) {
   return (
@@ -33,7 +33,8 @@ export default function DoctorDetailSheet({ doctor }) {
           <SheetDescription>
             <div className="flex flex-col items-center gap-4 mt-4">
               <Avatar className="h-24 w-24">
-                <AvatarImage
+                <Image
+                  fill={true}
                   src={doctor.user.picture}
                   alt={`${doctor.user.firstName} ${doctor.user.lastName}`}
                 />
