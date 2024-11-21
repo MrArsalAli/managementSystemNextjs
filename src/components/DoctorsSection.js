@@ -6,18 +6,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Categories, doctors } from "@/lib/data";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { HomeIcon, ClockIcon, IdCardIcon } from "@radix-ui/react-icons";
 import { getRequest } from "@/actions/requests";
 import DoctorCard from "./DoctorCard";
 
@@ -49,7 +39,7 @@ export default async function DoctorsSection({ isHome }) {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
           {requests.map((request) => (
-            <DoctorCard request={request} isAdmin={false} />
+            <DoctorCard key={request._id} request={request} isAdmin={false} />
           ))}
         </div>
       </div>

@@ -1,15 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { CheckIcon, XIcon, FilterIcon } from "lucide-react";
 import {
   Card,
@@ -22,16 +13,7 @@ import {
 import { HomeIcon, ClockIcon, IdCardIcon } from "@radix-ui/react-icons";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Image from "next/image";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import DoctorDetailSheet from "./DoctorDetailSheet";
-import { updateRequest } from "@/actions/requests";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
 const DoctorCard = ({ request, isAdmin, onAccept, onReject }) => (
@@ -54,7 +36,7 @@ const DoctorCard = ({ request, isAdmin, onAccept, onReject }) => (
           {request.user.firstName} {request.user.lastName}
         </CardTitle>
         <CardDescription className="capitalize">
-          {request.status}
+          {request.specialization}
         </CardDescription>
       </div>
     </CardHeader>
