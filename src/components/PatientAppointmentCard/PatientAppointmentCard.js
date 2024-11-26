@@ -19,11 +19,11 @@ export default function PatientAppointmentCard({ appointment }) {
         <Avatar className="h-12 w-12">
           <AvatarImage
             src={appointment?.request?.user?.picture}
-            alt={`${appointment.user.firstName} ${appointment.user.lastName}`}
+            alt={`${appointment.request.user.firstName} ${appointment.request.user.lastName}`}
           />
           <AvatarFallback>
-            {appointment.user.firstName[0]}
-            {appointment.user.lastName[0]}
+            {appointment.request.user.firstName[0]}
+            {appointment.request.user.lastName[0]}
           </AvatarFallback>
         </Avatar>
         <div>
@@ -55,20 +55,10 @@ export default function PatientAppointmentCard({ appointment }) {
             <span>{appointment?.request?.hospital}</span>
           </div>
           <div className="mt-2 flex items-center justify-between">
-            {/* <Badge
-                      variant={
-                        status === "pending"
-                          ? "secondary"
-                          : status === "accepted"
-                          ? "success"
-                          : "destructive"
-                      }
-                    >
-                      {status}
-                    </Badge> */}
             <span className="text-sm font-medium">
               Fee: ${appointment?.request?.fees}
             </span>
+            <Badge>{appointment?.status}</Badge>
           </div>
         </div>
       </CardContent>

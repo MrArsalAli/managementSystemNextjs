@@ -32,11 +32,11 @@ export async function GET(req) {
   await connectDB();
   const doctor = req?.nextUrl?.searchParams?.get("doctor");
   const user = req?.nextUrl?.searchParams?.get("user");
-  if (doctor){
-    const doctorRequest = await RequestModal.findOne({user : doctor})
+  const query = {};
+  if (doctor) {
+    const doctorRequest = await RequestModal.findOne({ user: doctor });
     query.request = doctorRequest._id;
   }
-  const query = {};
   if (user) query.user = user;
   const appointments = await AppointmentModal.find(query)
     .populate("user")
@@ -54,6 +54,31 @@ export async function GET(req) {
   );
 }
 
-export async function PUT(req) {}
+export async function PUT(req) {
+  await connectDB();
+  try {
+    const { id, status } = await req.json();
+    const update = await AppointmentModal.findOneAndUpdate(
+      { _id: id },
+      { status: status }
+    ).exec();
+    return Response.json(
+      {
+        error: false,
+        msg: "Appointment updated Successfully",
+        appointment: update,
+      },
+      { status: 201 }
+    );
+  } catch (err) {
+    return Response.json(
+      {
+        error: true,
+        msg: "Something went wrong",
+      },
+      { status: 400 }
+    );
+  }
+}
 
 export async function DELETE(req) {}
