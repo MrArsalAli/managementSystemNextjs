@@ -1,5 +1,7 @@
 import connectDB from "@/lib/connectDB";
 import { AppointmentModal } from "@/lib/modals/AppointmentModal";
+import { RequestModal } from "@/lib/modals/RequestModal";
+import { populate } from "mongoose";
 
 export async function POST(req) {
   await connectDB();
@@ -30,17 +32,22 @@ export async function GET(req) {
   await connectDB();
   const doctor = req?.nextUrl?.searchParams?.get("doctor");
   const user = req?.nextUrl?.searchParams?.get("user");
+  if (doctor){
+    const doctorRequest = await RequestModal.findOne({user : doctor})
+    query.request = doctorRequest._id;
+  }
   const query = {};
-  if (doctor) query.request = doctor;
-  if (user) query.request = user;
-
+  if (user) query.user = user;
   const appointments = await AppointmentModal.find(query)
     .populate("user")
-    .populate("request");
+    .populate({
+      path: "request",
+      populate: { path: "user" },
+    });
   return Response.json(
     {
       error: false,
-      msg: "Apointments fetched Successfully",
+      msg: "Appointments fetched Successfully",
       appointments,
     },
     { status: 201 }

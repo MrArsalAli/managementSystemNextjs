@@ -16,18 +16,16 @@ import { addAppointment } from "@/actions/appointment";
 
 export function DatePicker({ session, request }) {
   const [date, setDate] = React.useState(new Date());
-  const { toast } = useToast();
   const [loading, setLoading] = React.useState(false);
+  const { toast } = useToast();
 
-  const handleAppoinmentDate = () => {
+  const handleAppoinmentDate = async () => {
     let isDateInFuture = Date.now() < new Date(date);
     if (!isDateInFuture)
-      return toast({
-        title: "Select Correct Date!Mazaq ni banao",
-      });
+      return toast({ title: "Select Correct Date!Mazaq ni banao." });
     setLoading(true);
     const obj = { user: session.user._id, request: request, date };
-    const response = addAppointment(obj);
+    const response = await addAppointment(obj);
     toast({
       title: response.msg,
     });
