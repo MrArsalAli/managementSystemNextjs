@@ -25,7 +25,6 @@ dayjs.extend(relativeTime);
 
 
 export default async function DoctorAppointmentCard({ appointment }) {
-  const [loading, setLoading] = await useState(false);
   const handleAccept = async () => {
     setLoading(true);
     await updateAppointment(appointment._id, "accepted");
@@ -86,7 +85,6 @@ export default async function DoctorAppointmentCard({ appointment }) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-end space-x-2">
-        {loading && <span>Loading...</span>}
         {appointment.status === "pending" && (
           <>
             <Button
