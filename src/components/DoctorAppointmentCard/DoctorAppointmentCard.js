@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import {
   CalendarIcon,
   ClockIcon,
@@ -23,21 +22,22 @@ import { updateAppointment } from "@/actions/appointment";
 import { useState } from "react";
 dayjs.extend(relativeTime);
 
+
+
 export default async function DoctorAppointmentCard({ appointment }) {
-  const [loading, setLoading] = useState(false)
   const handleAccept = async () => {
-    setLoading(true)
+    setLoading(true);
     await updateAppointment(appointment._id, "accepted");
-    setLoading(false)
+    setLoading(false);
   };
   
   const handleReject = async () => {
-    setLoading(true)
+    setLoading(true);
     await updateAppointment(appointment._id, "cancelled");
-    setLoading(false)
+    setLoading(false);
   };
-
-
+  
+  const [loading, setLoading] = await useState(false);
   return (
     <Card key={appointment._id} className="shadow-lg">
       <CardHeader className="flex flex-row items-center gap-4">
@@ -55,7 +55,9 @@ export default async function DoctorAppointmentCard({ appointment }) {
           <CardTitle>
             {appointment?.user.firstName} {appointment?.user.lastName}
           </CardTitle>
-          <CardDescription className="uppercase">{appointment.status}</CardDescription>
+          <CardDescription className="uppercase">
+            {appointment.status}
+          </CardDescription>
         </div>
       </CardHeader>
       <CardContent>

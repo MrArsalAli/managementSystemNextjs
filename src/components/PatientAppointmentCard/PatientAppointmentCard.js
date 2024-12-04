@@ -12,6 +12,9 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
+
+
+
 export default function PatientAppointmentCard({ appointment }) {
   return (
     <Card key={appointment._id} className="shadow-lg">
