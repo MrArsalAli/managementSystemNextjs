@@ -20,15 +20,21 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Button } from "../ui/button";
 import { updateAppointment } from "@/actions/appointment";
+import { useState } from "react";
 dayjs.extend(relativeTime);
 
 export default async function DoctorAppointmentCard({ appointment }) {
+  const [loading, setLoading] = useState(false)
   const handleAccept = async () => {
+    setLoading(true)
     await updateAppointment(appointment._id, "accepted");
+    setLoading(false)
   };
-
+  
   const handleReject = async () => {
+    setLoading(true)
     await updateAppointment(appointment._id, "cancelled");
+    setLoading(false)
   };
 
 
@@ -49,7 +55,7 @@ export default async function DoctorAppointmentCard({ appointment }) {
           <CardTitle>
             {appointment?.user.firstName} {appointment?.user.lastName}
           </CardTitle>
-          <CardDescription>{appointment.status}</CardDescription>
+          <CardDescription className="uppercase">{appointment.status}</CardDescription>
         </div>
       </CardHeader>
       <CardContent>
@@ -78,6 +84,7 @@ export default async function DoctorAppointmentCard({ appointment }) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-end space-x-2">
+        {loading && <span>Loading...</span>}
         {appointment.status === "pending" && (
           <>
             <Button

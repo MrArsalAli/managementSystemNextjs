@@ -32,12 +32,35 @@ export async function GET(req) {
   await connectDB();
   const doctor = req?.nextUrl?.searchParams?.get("doctor");
   const user = req?.nextUrl?.searchParams?.get("user");
+  const status = req?.nextUrl?.searchParams?.get("status");
+  const now = Date.now();
   const query = {};
   if (doctor) {
     const doctorRequest = await RequestModal.findOne({ user: doctor });
     query.request = doctorRequest._id;
   }
+  if (status && status != "upcoming" && status != "past") query.status = status;
+  if (status && status == "upcoming") {
+    query.date = { $gt: now };
+    query.status = "accepted";
+  }
+  if (status && status == "past") {
+    query.date = { $lt: now };
+  }
   if (user) query.user = user;
+
+  const stats = {
+    accepted: await AppointmentModal.find({
+      status: "accepted ",
+    }).countDocuments(),
+    cancelled: await AppointmentModal.find({
+      status: "cancelled ",
+    }).countDocuments(),
+    pending: await AppointmentModal.find({
+      status: "pending ",
+    }).countDocuments(),
+  };
+
   const appointments = await AppointmentModal.find(query)
     .populate("user")
     .populate({
@@ -49,6 +72,7 @@ export async function GET(req) {
       error: false,
       msg: "Appointments fetched Successfully",
       appointments,
+      stats,
     },
     { status: 201 }
   );
