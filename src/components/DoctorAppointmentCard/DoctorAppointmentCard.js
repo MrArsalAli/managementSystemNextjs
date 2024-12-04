@@ -25,6 +25,7 @@ dayjs.extend(relativeTime);
 
 
 export default async function DoctorAppointmentCard({ appointment }) {
+  const [loading, setLoading] = await useState(false);
   const handleAccept = async () => {
     setLoading(true);
     await updateAppointment(appointment._id, "accepted");
@@ -37,7 +38,6 @@ export default async function DoctorAppointmentCard({ appointment }) {
     setLoading(false);
   };
   
-  const [loading, setLoading] = await useState(false);
   return (
     <Card key={appointment._id} className="shadow-lg">
       <CardHeader className="flex flex-row items-center gap-4">
