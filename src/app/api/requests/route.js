@@ -84,7 +84,7 @@ export async function PUT(req) {
   } catch (error) {
     return Response.json(
       {
-        error: true,
+        error: false,
         msg: "Somethong went wrong",
       },
       { status: 400 }

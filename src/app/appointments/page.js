@@ -13,6 +13,8 @@ export default async function Appointments() {
     session?.user?._id
   );
 
+  console.log("Appointments==>", appointments)
+
   const isDoctor = session.user.role == "doctor";
   return (
     <div className=" min-h-screen container mx-auto">

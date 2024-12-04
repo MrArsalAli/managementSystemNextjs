@@ -13,6 +13,7 @@ import DoctorCard from "./DoctorCard";
 
 export default async function DoctorsSection({ isHome }) {
   const { requests } = await getRequest("accepted");
+  console.log("requests==>", requests)
   return (
     <>
       <div className="container mx-auto my-20">

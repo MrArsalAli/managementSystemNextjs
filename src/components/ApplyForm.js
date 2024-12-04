@@ -5,8 +5,6 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import React, { useCallback } from "react";
-// import { useDropzone } from "react-dropzone";
-// import Dropzone from "react-dropzone";
 import {
   Form,
   FormControl,
@@ -16,11 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-// import { SelectItem } from "@radix-ui/react-select";
-// import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { addRequest } from "@/actions/requests";
 import { useToast } from "@/hooks/use-toast";
-// import UploadImage from "./UploadImage";
 
 // Define Zod schema
 const formSchema = z.object({
