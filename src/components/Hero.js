@@ -13,7 +13,7 @@ export default async function Hero() {
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
               MANAGEMENT SYSTEM
               <br className="hidden lg:inline-block" />
-              BY ARSALAN ALI
+               {" "}BY BATCH 11
             </h1>
             <p className="mb-8 leading-relaxed ">
               Our Management System is a comprehensive solution designed to
